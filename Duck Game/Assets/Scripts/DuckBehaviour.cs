@@ -22,7 +22,8 @@ public class DuckBehaviour : MonoBehaviour
         agent = GetComponent<NavMeshAgent>(); 
         if(agent!=null)
         {
-            agent.speed= Random.Range(1f,20f);
+            //agent.speed= Random.Range(1f,5f);
+            agent.speed = 1f;
             Debug.Log("Speed set to: " + agent.speed);
             agent.SetDestination(RandomNavMeshLocation());
         }
