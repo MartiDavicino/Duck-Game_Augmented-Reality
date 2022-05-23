@@ -15,6 +15,7 @@ public class DuckBehaviour : MonoBehaviour
 
     Material duckMaterial;
     float materialRedness;
+    float rednessIncrement;
     string rednessReference;
 
     [Range(0,500)]
@@ -29,25 +30,29 @@ public class DuckBehaviour : MonoBehaviour
             Debug.LogWarning("Could find spawner");
 
 
+        agent = GetComponent<NavMeshAgent>();
+        if (agent != null)
+        {
+            //agent.speed= Random.Range(1f,5f);
+            agent.speed = 1f;
+            lifetime = Random.Range(7f, 25f);
+            //Debug.Log("Speed set to: " + agent.speed);
+            agent.SetDestination(RandomNavMeshLocation());
+        }
+
+
         var renderer=GetComponentInChildren<Renderer>();
         duckMaterial=Instantiate(renderer.sharedMaterial);
         renderer.material=duckMaterial;
 
 
         materialRedness = 0f;
+        rednessIncrement = (5.5f/lifetime)/1000;
         rednessReference = "Vector1_032a385f8a344deb803012daf7caf1af";
         duckMaterial.SetFloat(rednessReference, materialRedness);
 
 
-        agent = GetComponent<NavMeshAgent>(); 
-        if(agent!=null)
-        {
-            //agent.speed= Random.Range(1f,5f);
-            agent.speed = 1f;
-            lifetime = Random.Range(3f, 10f);
-            //Debug.Log("Speed set to: " + agent.speed);
-            agent.SetDestination(RandomNavMeshLocation());
-        }
+        
     }
 
     // Update is called once per frame
@@ -60,7 +65,7 @@ public class DuckBehaviour : MonoBehaviour
 
         if(materialRedness<=2f)
         {
-            materialRedness += .001f;
+            materialRedness += rednessIncrement;
             duckMaterial.SetFloat(rednessReference, materialRedness);
         }
         

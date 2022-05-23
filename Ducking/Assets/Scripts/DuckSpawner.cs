@@ -11,7 +11,7 @@ public class DuckSpawner : MonoBehaviour
     [Range(0, 500)]
     public float radius;
 
-    float respawnTime=0.5f;
+    float respawnTime=1.5f;
     float respawnCounter = 0f;
 
     public GameObject duckPrefab;
