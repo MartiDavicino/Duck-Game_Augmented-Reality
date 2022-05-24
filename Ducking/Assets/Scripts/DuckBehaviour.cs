@@ -23,12 +23,21 @@ public class DuckBehaviour : MonoBehaviour
 
     float lifetime;
 
+    ParticleSystem confettiParticle;
+    ParticleSystem explosionParticle;
     void Awake()
     {
         spawner = GameObject.Find("Spawner");
         if (spawner == null)
             Debug.LogWarning("Could find spawner");
 
+        confettiParticle = GameObject.Find("confetti").GetComponent<ParticleSystem>();
+        if (confettiParticle == null)
+            Debug.LogWarning("Could find confetti");
+
+        explosionParticle = GameObject.Find("explosion").GetComponent<ParticleSystem>();
+        if (explosionParticle == null)
+            Debug.LogWarning("Could find explosion");
 
         agent = GetComponent<NavMeshAgent>();
         if (agent != null)
@@ -51,14 +60,17 @@ public class DuckBehaviour : MonoBehaviour
         rednessReference = "Vector1_032a385f8a344deb803012daf7caf1af";
         duckMaterial.SetFloat(rednessReference, materialRedness);
 
+        //confettiParticle.Pause();
+        //explosionParticle.Pause();
 
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(agent!=null && agent.remainingDistance<=agent.stoppingDistance)
+        
+
+        if (agent!=null && agent.remainingDistance<=agent.stoppingDistance)
         {
             agent.SetDestination(RandomNavMeshLocation());
         }
@@ -76,6 +88,9 @@ public class DuckBehaviour : MonoBehaviour
             Debug.Log("Duck Die");
 
             spawner.GetComponent<DuckSpawner>().currentDucks--;
+
+            if(explosionParticle!=null)
+                explosionParticle.Play();
 
             Destroy(gameObject);
         }
