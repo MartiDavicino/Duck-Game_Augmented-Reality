@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 1
+  rodRotationIncrease: 0.001
 --- !u!20 &1687258584
 Camera:
   m_ObjectHideFlags: 0
