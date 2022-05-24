@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1074127741545452268}
   - component: {fileID: 1507739617133951074}
   - component: {fileID: 8691027880232796133}
+  - component: {fileID: 1062217920876516724}
   m_Layer: 0
   m_Name: duck
-  m_TagString: Untagged
+  m_TagString: Duck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,8 +86,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1507739617133951074}
-  duckMaterial: {fileID: 2100000, guid: 525decd83b407664884cf5c7578775e9, type: 2}
   radius: 10
+--- !u!136 &1062217920876516724
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3527367802799786366}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8664813298541335729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157,6 +171,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f717652ee3c1a4a47af9e0feac127ca0, type: 3}
       propertyPath: m_Name
       value: rubber_duck
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f717652ee3c1a4a47af9e0feac127ca0, type: 3}
+      propertyPath: m_TagString
+      value: Duck
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f717652ee3c1a4a47af9e0feac127ca0, type: 3}
