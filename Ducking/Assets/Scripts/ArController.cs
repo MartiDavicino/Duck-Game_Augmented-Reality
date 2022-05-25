@@ -8,7 +8,10 @@ public class ArController : MonoBehaviour
     public GameObject myObject;
     public ARRaycastManager raycastManager;
 
-   
+    GameObject myCamera;
+    GameObject ARSession;
+
+    bool planePlaced=false;
 
     // Update is called once per frame
     void Update()
@@ -19,8 +22,19 @@ public class ArController : MonoBehaviour
 
             raycastManager.Raycast(Input.GetTouch(0).position, touches, UnityEngine.XR.ARSubsystems.TrackableType.Planes);
 
-            if(touches.Count > 0)
-                GameObject.Instantiate(myObject,touches[0].pose.position,touches[0].pose.rotation);
+            if (touches.Count > 0 && !planePlaced)
+            {
+                GameObject.Instantiate(myObject, touches[0].pose.position, touches[0].pose.rotation);
+                planePlaced = true;
+            }
+        }
+
+        if(planePlaced && myCamera==null)
+        {
+            myCamera = GameObject.Find("Main Camera");
+            ARSession = GameObject.Find("AR Session Origin");
+
+            ARSession.GetComponent<ARSessionOrigin>().camera=myCamera.GetComponent<Camera>();
         }
     }
 }
