@@ -289,8 +289,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015522030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.06}
-  m_LocalScale: {x: 3.4309, y: 3.4309, z: 3.4309}
+  m_LocalPosition: {x: 0, y: 0, z: 4.18}
+  m_LocalScale: {x: 2.4406738, y: 2.4406738, z: 2.4406738}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -307,10 +307,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc095679cb0e4146bf44bfc7a358140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfDucks: 15
+  numberOfDucks: 5
   currentDucks: 0
   initialPos: {fileID: 1015522034}
-  radius: 20
+  radius: 15
   duckPrefab: {fileID: 3527367802799786366, guid: 4af2abe7ac0177942981e28e3cd07655, type: 3}
 --- !u!1 &1207968910
 GameObject:

@@ -16,6 +16,8 @@ public class DuckBehaviour : MonoBehaviour
     Material duckMaterial;
     float materialRedness;
     float rednessIncrement;
+    [Range(1f, 10f)]
+    public float rednessIncrementFactor;
     string rednessReference;
 
     [Range(0,500)]
@@ -25,6 +27,10 @@ public class DuckBehaviour : MonoBehaviour
 
     ParticleSystem confettiParticle;
     ParticleSystem explosionParticle;
+
+    ParticleSystem confettiParticleInstance;
+    ParticleSystem explosionParticleInstance;
+
     void Awake()
     {
         spawner = GameObject.Find("Spawner");
@@ -42,26 +48,26 @@ public class DuckBehaviour : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         if (agent != null)
         {
-            //agent.speed= Random.Range(1f,5f);
-            agent.speed = 1f;
+            agent.speed= Random.Range(1f,3f);
             lifetime = Random.Range(7f, 25f);
             //Debug.Log("Speed set to: " + agent.speed);
             agent.SetDestination(RandomNavMeshLocation());
         }
 
-
+        //Duck Material Instance
         var renderer=GetComponentInChildren<Renderer>();
         duckMaterial=Instantiate(renderer.sharedMaterial);
         renderer.material=duckMaterial;
 
+        //Explosion Particle Instance
+        
 
         materialRedness = 0f;
-        rednessIncrement = (5.5f/lifetime)/1000;
+        rednessIncrement = (rednessIncrementFactor/lifetime)/1000;
         rednessReference = "Vector1_032a385f8a344deb803012daf7caf1af";
         duckMaterial.SetFloat(rednessReference, materialRedness);
 
-        //confettiParticle.Pause();
-        //explosionParticle.Pause();
+        
 
     }
 
@@ -80,18 +86,23 @@ public class DuckBehaviour : MonoBehaviour
             materialRedness += rednessIncrement;
             duckMaterial.SetFloat(rednessReference, materialRedness);
         }
-        
+
+        explosionParticle.Play();
 
         lifetime -= Time.deltaTime;
+
         if (lifetime <= 0)
         {
             Debug.Log("Duck Die");
 
-            spawner.GetComponent<DuckSpawner>().currentDucks--;
 
             if(explosionParticle!=null)
+            {
                 explosionParticle.Play();
+                //Debug.Log("Explosion");
+            }
 
+            spawner.GetComponent<DuckSpawner>().currentDucks--;
             Destroy(gameObject);
         }
     }

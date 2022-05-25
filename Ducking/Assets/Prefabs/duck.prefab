@@ -88,6 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1507739617133951074}
+  rednessIncrementFactor: 10
   radius: 10
 --- !u!136 &1062217920876516724
 CapsuleCollider:
