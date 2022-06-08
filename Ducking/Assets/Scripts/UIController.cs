@@ -17,11 +17,13 @@ public class UIController : MonoBehaviour
     GameObject progressBar;
     float progressIncrement;
     float progressDecrement;
+
+    GameObject cameraController;
     void Start()
     {
 
         progressIncrement = 0.001f;
-        progressDecrement = progressIncrement * 3;
+        progressDecrement = progressIncrement * 7;
 
         cursor = GameObject.Find("cursor");
         if (cursor == null)
@@ -30,6 +32,10 @@ public class UIController : MonoBehaviour
         progressBar = GameObject.Find("Progress Bar");
         if (progressBar == null)
             Debug.LogWarning("Couldnt find progressBar");
+
+        cameraController = GameObject.Find("Main Camera");
+        if (cameraController == null)
+            Debug.LogWarning("Couldnt find camera controller");
 
         cursor.GetComponent<Image>().sprite= cursor01;
         duckDetected = false;
@@ -59,10 +65,17 @@ public class UIController : MonoBehaviour
         {
             Debug.LogWarning("Progress Bar");
 
-            progressBar.GetComponent<Slider>().value += progressIncrement;
+            progressBar.GetComponent<Slider>().value += cameraController.GetComponent<CameraController>().rodRotationIncrease*progressIncrement;
+
+            //progressBar.GetComponent<Slider>().value += progressIncrement;
         }
         else
-            progressBar.GetComponent<Slider>().value -= progressDecrement;
+        {
+            progressBar.GetComponent<Slider>().value -= cameraController.GetComponent<CameraController>().rodRotationIncrease*progressDecrement;
+
+            //progressBar.GetComponent<Slider>().value -= progressDecrement;
+        }
+            
 
 
     }

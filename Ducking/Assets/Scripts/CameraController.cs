@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
             Debug.LogWarning("Couldnt find rod");
 
         rodRotationSpeed = 0f;
-        rodRotationDecrease = rodRotationIncrease * 1.5f;
+        rodRotationDecrease = rodRotationIncrease * 3.5f;
 
     }
 
