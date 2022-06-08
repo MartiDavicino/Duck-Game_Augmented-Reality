@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CameraController : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         RotateHandle();
 
@@ -38,7 +39,7 @@ public class CameraController : MonoBehaviour
         if (RayCastDuckDetection())
         {
             UI.GetComponent<UIController>().duckDetected = true;
-            if (rodRotationSpeed < 1)
+            if (rodRotationSpeed < 4)
                 rodRotationSpeed += rodRotationIncrease * Time.deltaTime;
         }
             
@@ -46,7 +47,7 @@ public class CameraController : MonoBehaviour
         {
             UI.GetComponent<UIController>().duckDetected = false;
             if (rodRotationSpeed > 0)
-                rodRotationSpeed -= rodRotationDecrease * Time.deltaTime;
+                rodRotationSpeed -= rodRotationDecrease * 1.5f * Time.deltaTime;
         }
         
 
@@ -59,8 +60,6 @@ public class CameraController : MonoBehaviour
         float pitch = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         transform.Rotate(-pitch, yaw, 0);
-        
-
     }
 
     bool RayCastDuckDetection()
@@ -73,16 +72,24 @@ public class CameraController : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
             var selection = hit.transform;
+
             if(selection.tag=="Duck")
             {
+                Fish(selection.gameObject);
                 ret = true;
-                Debug.Log("Duck hit");
+                
             }
-            
         }
         return ret;
     }
 
+    public void Fish(GameObject duck)
+    {
+        duck.GetComponent<DuckBehaviour>().caught = true;
+        float step = rodRotationSpeed * Time.deltaTime;
+        duck.GetComponent<NavMeshAgent>().ResetPath();
+        duck.transform.position = Vector3.MoveTowards(duck.transform.position, transform.position, step);
+    }
     void RotateHandle()
     {
         rodHandle.transform.Rotate(0, 0, -rodRotationSpeed);

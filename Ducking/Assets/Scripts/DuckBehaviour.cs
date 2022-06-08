@@ -25,11 +25,15 @@ public class DuckBehaviour : MonoBehaviour
     public float lifetimeInterval;
     private float lifetime;
 
-    ParticleSystem confettiParticle;
+    public ParticleSystem confettiParticle;
     public ParticleSystem explosionParticle;
 
     ParticleSystem confettiParticleInstance;
     ParticleSystem explosionParticleInstance;
+
+    [HideInInspector] public bool caught;
+
+    private bool invincible;
 
     void Start()
     {
@@ -37,9 +41,9 @@ public class DuckBehaviour : MonoBehaviour
         if (spawner == null)
             Debug.LogWarning("Could find spawner");
 
-        confettiParticle = GameObject.Find("confetti").GetComponent<ParticleSystem>();
-        if (confettiParticle == null)
-            Debug.LogWarning("Could find confetti");
+        //confettiParticle = GameObject.Find("confetti").GetComponent<ParticleSystem>();
+        //if (confettiParticle == null)
+        //    Debug.LogWarning("Could find confetti");
 
         //explosionParticle = GameObject.Find("explosion").GetComponent<ParticleSystem>();
         //if (explosionParticle == null)
@@ -69,6 +73,8 @@ public class DuckBehaviour : MonoBehaviour
         rednessIncrement = 5f/lifetime;
         rednessReference = "Vector1_032a385f8a344deb803012daf7caf1af";
         duckMaterial.SetFloat(rednessReference, materialRedness);
+
+        invincible = false;
     }
 
     // Update is called once per frame
@@ -79,7 +85,7 @@ public class DuckBehaviour : MonoBehaviour
             agent.SetDestination(RandomNavMeshLocation());
         }
 
-        if(materialRedness <= 5f)
+        if(materialRedness <= 5f && !invincible)
         {
             materialRedness += rednessIncrement * Time.deltaTime;
             duckMaterial.SetFloat(rednessReference, materialRedness);
@@ -96,6 +102,7 @@ public class DuckBehaviour : MonoBehaviour
             spawner.GetComponent<DuckSpawner>().currentDucks--;
             Destroy(gameObject);
         }
+        caught = false;
     }
 
     private void OnDestroy()
@@ -103,7 +110,7 @@ public class DuckBehaviour : MonoBehaviour
         if(duckMaterial!=null)
             Destroy(duckMaterial);
     }
-    public Vector3 RandomNavMeshLocation()
+    private Vector3 RandomNavMeshLocation()
     {
         Vector3 finalPos = Vector3.zero;
         Vector3 randomPos = Random.insideUnitSphere * radius;
@@ -121,6 +128,26 @@ public class DuckBehaviour : MonoBehaviour
 
 
         return finalPos;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Net" && caught)
+        {
+            Instantiate(confettiParticle, transform.position, transform.rotation);
+            spawner.GetComponent<DuckSpawner>().currentDucks--;
+            Destroy(gameObject);
+        } else if (other.tag == "Net")
+        {
+            invincible = true;
+            duckMaterial.SetFloat(rednessReference, -10);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Net")
+            invincible = false;
     }
 }
 
