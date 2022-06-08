@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour
     GameObject UI;
     GameObject rodHandle;
     float rodRotationSpeed;
-    [Range(0.001f, .1f)]
     public float rodRotationIncrease;
     float rodRotationDecrease;
 
@@ -40,14 +39,14 @@ public class CameraController : MonoBehaviour
         {
             UI.GetComponent<UIController>().duckDetected = true;
             if (rodRotationSpeed < 1)
-                rodRotationSpeed += rodRotationIncrease;
+                rodRotationSpeed += rodRotationIncrease * Time.deltaTime;
         }
             
         else
         {
             UI.GetComponent<UIController>().duckDetected = false;
             if (rodRotationSpeed > 0)
-                rodRotationSpeed -= rodRotationDecrease;
+                rodRotationSpeed -= rodRotationDecrease * Time.deltaTime;
         }
         
 
