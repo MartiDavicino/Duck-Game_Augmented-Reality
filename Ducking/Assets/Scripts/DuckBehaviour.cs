@@ -35,30 +35,42 @@ public class DuckBehaviour : MonoBehaviour
 
     private bool invincible;
 
+    [HideInInspector] public float caughtTime = 0.3f;
+    [HideInInspector] public float caughtTimeIncrease;
+
+
     void Start()
     {
         spawner = GameObject.Find("Spawner");
         if (spawner == null)
             Debug.LogWarning("Could find spawner");
 
-        //confettiParticle = GameObject.Find("confetti").GetComponent<ParticleSystem>();
-        //if (confettiParticle == null)
-        //    Debug.LogWarning("Could find confetti");
-
-        //explosionParticle = GameObject.Find("explosion").GetComponent<ParticleSystem>();
-        //if (explosionParticle == null)
-        //    Debug.LogWarning("Could find explosion");
-
-        Vector3 randomSize = new Vector3(1, 1, 1) * Random.Range(0.5f, 2f);
-        transform.localScale = randomSize;
+        caughtTimeIncrease = 0f;
 
         agent = GetComponent<NavMeshAgent>();
 
+        //float duckRandom = Random.Range(0f, 1f);
+
+        if (Random.Range(0f, 1f) >= 0.65f)
+        {
+            if (Random.value > 0.5f)
+            {
+                Vector3 randomSize = new Vector3(1, 1, 1) * Random.Range(0.6f, 0.7f);
+                transform.localScale = randomSize;
+                agent.speed = 7.5f;
+            }
+            else
+            {
+                Vector3 randomSize = new Vector3(1, 1, 1) * Random.Range(1.7f, 2f);
+                transform.localScale = randomSize;
+                agent.speed = 0.5f;
+            }
+        }
+
         if (agent != null)
         {
-            agent.speed = Random.Range(1f,3f);
 
-            if(Random.Range(0,1) == 0f)
+            if(Random.value > 0.5f)
                lifetime = Random.Range(lifetimeInterval / 5f, lifetimeInterval / 2f);
             else
                 lifetime = Random.Range(lifetimeInterval / 2f, lifetimeInterval);
@@ -94,6 +106,9 @@ public class DuckBehaviour : MonoBehaviour
             duckMaterial.SetFloat(rednessReference, materialRedness);
         }
 
+        if(!caught && caughtTimeIncrease > 0)
+            caughtTimeIncrease -= Time.deltaTime;
+
 
         lifetime -= Time.deltaTime;
 
@@ -105,6 +120,7 @@ public class DuckBehaviour : MonoBehaviour
             spawner.GetComponent<DuckSpawner>().currentDucks--;
             Destroy(gameObject);
         }
+
         caught = false;
     }
 

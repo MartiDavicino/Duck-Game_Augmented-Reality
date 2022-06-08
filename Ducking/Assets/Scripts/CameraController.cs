@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     public float rodRotationIncrease;
     float rodRotationDecrease;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,8 @@ public class CameraController : MonoBehaviour
             Debug.LogWarning("Couldnt find rod");
 
         rodRotationSpeed = 0f;
-        rodRotationDecrease = rodRotationIncrease * 3f;
+        rodRotationDecrease = rodRotationIncrease * 1.5f;
+
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class CameraController : MonoBehaviour
         {
             UI.GetComponent<UIController>().duckDetected = false;
             if (rodRotationSpeed > 0)
-                rodRotationSpeed -= rodRotationDecrease * 1.5f * Time.deltaTime;
+                rodRotationSpeed -= rodRotationDecrease * Time.deltaTime;
         }
         
 
@@ -77,7 +79,6 @@ public class CameraController : MonoBehaviour
             {
                 Fish(selection.gameObject);
                 ret = true;
-                
             }
         }
         return ret;
@@ -85,10 +86,16 @@ public class CameraController : MonoBehaviour
 
     public void Fish(GameObject duck)
     {
+        duck.GetComponent<DuckBehaviour>().caughtTimeIncrease += Time.deltaTime;
         duck.GetComponent<DuckBehaviour>().caught = true;
-        float step = rodRotationSpeed * Time.deltaTime;
-        duck.GetComponent<NavMeshAgent>().ResetPath();
-        duck.transform.position = Vector3.MoveTowards(duck.transform.position, transform.position, step);
+
+        if (duck.GetComponent<DuckBehaviour>().caughtTimeIncrease >= duck.GetComponent<DuckBehaviour>().caughtTime)
+        {
+            float step = rodRotationSpeed * Time.deltaTime;
+            duck.transform.position = Vector3.MoveTowards(duck.transform.position, transform.position, step);
+            duck.GetComponent<NavMeshAgent>().ResetPath();
+            duck.GetComponent<DuckBehaviour>().caughtTimeIncrease = duck.GetComponent<DuckBehaviour>().caughtTime;
+        }
     }
     void RotateHandle()
     {
