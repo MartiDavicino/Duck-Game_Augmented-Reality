@@ -35,7 +35,7 @@ public class DuckBehaviour : MonoBehaviour
 
     private bool invincible;
 
-    [HideInInspector] public float caughtTime = 0.3f;
+    [HideInInspector] public float caughtTime = 0.5f;
     [HideInInspector] public float caughtTimeIncrease;
 
 
@@ -57,7 +57,7 @@ public class DuckBehaviour : MonoBehaviour
             {
                 Vector3 randomSize = new Vector3(1, 1, 1) * Random.Range(0.6f, 0.7f);
                 transform.localScale = randomSize;
-                agent.speed = 7.5f;
+                agent.speed = 8.5f;
             }
             else
             {
