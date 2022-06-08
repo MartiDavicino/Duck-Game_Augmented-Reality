@@ -49,6 +49,9 @@ public class DuckBehaviour : MonoBehaviour
         //if (explosionParticle == null)
         //    Debug.LogWarning("Could find explosion");
 
+        Vector3 randomSize = new Vector3(1, 1, 1) * Random.Range(0.5f, 2f);
+        transform.localScale = randomSize;
+
         agent = GetComponent<NavMeshAgent>();
 
         if (agent != null)
@@ -56,9 +59,9 @@ public class DuckBehaviour : MonoBehaviour
             agent.speed = Random.Range(1f,3f);
 
             if(Random.Range(0,1) == 0f)
-               lifetime = Random.Range(lifetimeInterval / 3f, lifetimeInterval);
+               lifetime = Random.Range(lifetimeInterval / 5f, lifetimeInterval / 2f);
             else
-                lifetime = Random.Range(lifetimeInterval / 1.5f, lifetimeInterval);
+                lifetime = Random.Range(lifetimeInterval / 2f, lifetimeInterval);
 
             agent.SetDestination(RandomNavMeshLocation());
         }

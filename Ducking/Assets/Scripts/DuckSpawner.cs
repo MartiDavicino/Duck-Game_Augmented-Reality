@@ -11,7 +11,7 @@ public class DuckSpawner : MonoBehaviour
     [Range(0, 500)]
     public float radius;
 
-    float respawnTime = 1.5f;
+    float respawnTime = 5f;
     float respawnCounter = 0f;
 
     public GameObject duckPrefab;
@@ -19,18 +19,11 @@ public class DuckSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //currentDucks = numberOfDucks;
-
-        for(int i = 0; i < numberOfDucks; i++)
-        {
-           // Instantiate(duckPrefab,RandomPosition(),Quaternion.identity);
-        }
+      
     }
 
     private void Update()
     {
-        //DucksCount();
-
         if(currentDucks < numberOfDucks)
         {
             respawnCounter += Time.deltaTime;
