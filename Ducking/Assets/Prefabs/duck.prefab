@@ -74,7 +74,8 @@ MonoBehaviour:
   radius: 10
   lifetimeInterval: 40
   confettiParticle: {fileID: 7194952087870367274, guid: a56fa166c27c1b64a90204cdc43a72fd, type: 3}
-  explosionParticle: {fileID: 2096677621280354933, guid: 1128440432cf7cc449e0104472de4cad, type: 3}
+  explosionParticle: {fileID: 4851657501489729934, guid: 20d7286e48092234f855805dcbf1a5a1, type: 3}
+  caught: 0
 --- !u!135 &1494853089924436865
 SphereCollider:
   m_ObjectHideFlags: 0
