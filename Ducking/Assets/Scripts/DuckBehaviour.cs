@@ -57,7 +57,7 @@ public class DuckBehaviour : MonoBehaviour
             {
                 Vector3 randomSize = new Vector3(1, 1, 1) * Random.Range(0.6f, 0.7f);
                 transform.localScale = randomSize;
-                agent.speed = 8.5f;
+                agent.speed = 8f;
             }
             else
             {
