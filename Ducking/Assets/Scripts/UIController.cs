@@ -18,7 +18,7 @@ public class UIController : MonoBehaviour
     float progressIncrement;
     float progressDecrement;
 
-    GameObject cameraController;
+    RodBehaviour rodScript;
     void Start()
     {
 
@@ -33,9 +33,8 @@ public class UIController : MonoBehaviour
         if (progressBar == null)
             Debug.LogWarning("Couldnt find progressBar");
 
-        cameraController = GameObject.Find("Main Camera");
-        if (cameraController == null)
-            Debug.LogWarning("Couldnt find camera controller");
+        rodScript = GameObject.Find("fish_rod").GetComponent<RodBehaviour>();
+
 
         cursor.GetComponent<Image>().sprite= cursor01;
         duckDetected = false;
@@ -60,24 +59,26 @@ public class UIController : MonoBehaviour
             progressBar.GetComponent<Slider>().value = 0.1f;
 
 
+        progressBar.GetComponent<Slider>().value = rodScript.currentForceMultiplier;
 
-        if (duckDetected)
-        {
-            Debug.LogWarning("Progress Bar");
 
-            progressBar.GetComponent<Slider>().value += cameraController.GetComponent<CameraController>().rodRotationIncrease*progressIncrement;
+        //if (duckDetected)
+        //{
+        //    Debug.LogWarning("Progress Bar");
 
-            //progressBar.GetComponent<Slider>().value += progressIncrement;
-        }
-        else
-        {
-            progressBar.GetComponent<Slider>().value -= cameraController.GetComponent<CameraController>().rodRotationIncrease*progressDecrement;
+        //    progressBar.GetComponent<Slider>().value = cameraController.GetComponent<CameraController>().rodRotationIncrease*progressIncrement;
 
-            //progressBar.GetComponent<Slider>().value -= progressDecrement;
-        }
-            
+        //    //progressBar.GetComponent<Slider>().value += progressIncrement;
+        //}
+        //else
+        //{
+        //    progressBar.GetComponent<Slider>().value = cameraController.GetComponent<CameraController>().rodRotationIncrease*progressDecrement;
+
+        //    //progressBar.GetComponent<Slider>().value -= progressDecrement;
+        //}
+
 
 
     }
-     
+
 }

@@ -12,26 +12,37 @@ public class ThrowCycle : MonoBehaviour
     private Rigidbody rb;
     private GameObject net;
 
+    private RodBehaviour rodScript;
+
     // Start is called before the first frame update
     void Start()
     {
+        rodScript = GameObject.Find("fish_rod").GetComponent<RodBehaviour>();
         net = GameObject.Find("Net");
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.up * initialForce / 1.5f);
-        rb.AddForce(transform.forward * initialForce);
+        rb.AddForce(transform.forward * initialForce * rodScript.currentForceMultiplier);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            rodScript.currentForceMultiplier = 0f;
+        }
+    }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
-            Vector3 dir = net.transform.position - transform.position;
+            Vector3 dir = Camera.main.transform.position - transform.position;
             dir = dir.normalized;
-            rb.AddForce(dir * rodRotationSpeed);
+            if(rodScript.pressing)
+            {
+                rodScript.RotateHandle();
+                rb.AddForce(dir * rodScript.currentForceMultiplier * 20f);
+            }
         }
-
-        
-
     }
 
     private void OnTriggerStay(Collider other)
@@ -56,6 +67,7 @@ public class ThrowCycle : MonoBehaviour
     {
         if(other.tag == "DeathBait")
         {
+            rodScript.currentForceMultiplier = 0f;
             Destroy(gameObject);
         }
     }
