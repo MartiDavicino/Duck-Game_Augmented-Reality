@@ -75,6 +75,15 @@ public class RodBehaviour : MonoBehaviour
                     bait = Instantiate(baitPrefab, spawnPos, Camera.main.transform.rotation);
                 }
             }
+
+            if(Input.touchCount > 1)
+            {
+                if (bait != null)
+                {
+                    currentForceMultiplier = 0f;
+                    Destroy(bait);
+                }
+            }
         }
 
         if (!pressing)
