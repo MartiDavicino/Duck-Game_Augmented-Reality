@@ -67,7 +67,6 @@ public class ThrowCycle : MonoBehaviour
     {
         if(other.tag == "DeathBait")
         {
-            rodScript.currentForceMultiplier = 0f;
             Destroy(gameObject);
         }
     }

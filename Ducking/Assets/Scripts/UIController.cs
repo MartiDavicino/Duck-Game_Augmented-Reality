@@ -61,24 +61,6 @@ public class UIController : MonoBehaviour
 
         progressBar.GetComponent<Slider>().value = rodScript.currentForceMultiplier;
 
-
-        //if (duckDetected)
-        //{
-        //    Debug.LogWarning("Progress Bar");
-
-        //    progressBar.GetComponent<Slider>().value = cameraController.GetComponent<CameraController>().rodRotationIncrease*progressIncrement;
-
-        //    //progressBar.GetComponent<Slider>().value += progressIncrement;
-        //}
-        //else
-        //{
-        //    progressBar.GetComponent<Slider>().value = cameraController.GetComponent<CameraController>().rodRotationIncrease*progressDecrement;
-
-        //    //progressBar.GetComponent<Slider>().value -= progressDecrement;
-        //}
-
-
-
     }
 
 }
