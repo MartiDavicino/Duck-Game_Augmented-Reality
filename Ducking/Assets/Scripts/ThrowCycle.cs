@@ -49,6 +49,7 @@ public class ThrowCycle : MonoBehaviour
     {
         if (other.tag == "Duck")
         {
+            if (other.GetComponent<DuckBehaviour>().invincible) return;
             other.GetComponent<DuckBehaviour>().caught = true;
             Destroy(other.GetComponent<NavMeshAgent>());
             other.transform.position = transform.position;

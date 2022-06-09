@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9656760883e5064896ce57c382b8f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myObject: {fileID: 4220277328350249120, guid: 61ed0559a58c63941bfa303a98356e38, type: 3}
+  myObject: {fileID: 1670141831079907634, guid: a091e5f8cac635740bf73c5d89d41ba9, type: 3}
   raycastManager: {fileID: 1070592015}
 --- !u!4 &2052437940
 Transform:

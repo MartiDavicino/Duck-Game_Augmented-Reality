@@ -78,6 +78,7 @@ MonoBehaviour:
   caught: 0
   caughtTime: 0.3
   caughtTimeIncrease: 0
+  generalManager: {fileID: 3295762993902417855, guid: a091e5f8cac635740bf73c5d89d41ba9, type: 3}
 --- !u!135 &1494853089924436865
 SphereCollider:
   m_ObjectHideFlags: 0
