@@ -33,11 +33,17 @@ public class DuckBehaviour : MonoBehaviour
 
     [HideInInspector] public bool caught;
 
-    private bool invincible;
+    [HideInInspector] public bool invincible;
 
     [HideInInspector] public float caughtTime = 0.5f;
     [HideInInspector] public float caughtTimeIncrease;
 
+    private List<GameObject> hats;
+    private GeneralManager generalManager;
+    private int hatIndex;
+    private GameObject hat;
+
+    private bool aTomarPorCulo;
 
     void Start()
     {
@@ -89,12 +95,28 @@ public class DuckBehaviour : MonoBehaviour
         rednessReference = "Vector1_032a385f8a344deb803012daf7caf1af";
         duckMaterial.SetFloat(rednessReference, materialRedness);
 
+        aTomarPorCulo = false;
+
+
         invincible = false;
+
+        generalManager = GameObject.Find("fish_rod").GetComponent<GeneralManager>();
+        if(generalManager.unlockedHats.Count > 0)
+        {
+            hats = generalManager.unlockedHats;
+
+            hatIndex = Random.Range(0, hats.Count);
+            Vector3 startPosition = new Vector3(transform.position.x, transform.position.y + (0.9f * transform.localScale.y), transform.position.z + (0.15f * transform.localScale.z));
+            hat = Instantiate(hats[hatIndex], startPosition, Quaternion.identity);
+            hat.transform.parent = gameObject.transform;
+            hat.transform.Rotate(-90, 0, 0);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (agent!=null && agent.remainingDistance <= agent.stoppingDistance)
         {
             agent.SetDestination(RandomNavMeshLocation());
@@ -151,9 +173,11 @@ public class DuckBehaviour : MonoBehaviour
     {
         if(other.tag == "Net" && caught)
         {
+            generalManager.currentScore += 100;
+            //generalManager.currentScore += 30 / (int)transform.localScale.magnitude;
             Instantiate(confettiParticle, transform.position, transform.rotation);
             spawner.GetComponent<DuckSpawner>().currentDucks--;
-            Destroy(gameObject);
+            aTomarPorCulo = true;
         } else if (other.tag == "Net")
         {
             invincible = true;
@@ -165,6 +189,12 @@ public class DuckBehaviour : MonoBehaviour
     {
         if (other.tag == "Net")
             invincible = false;
+    }
+
+    private void LateUpdate()
+    {
+        if(aTomarPorCulo)
+            Destroy(gameObject);
     }
 }
 
