@@ -67,20 +67,43 @@ public class CameraController : MonoBehaviour
     bool RayCastDuckDetection()
     {
         bool ret = false;
-        RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        if (Input.touchCount > 0)
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            Touch touch = Input.GetTouch(0);
 
-            var selection = hit.transform;
+            Vector3 touchPosition = touch.position;
 
-            if(selection.tag=="Duck")
+            if (touch.phase == TouchPhase.Began)
             {
-                Fish(selection.gameObject);
-                ret = true;
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.gameObject.tag == "Duck")
+                    {
+                        Fish(hit.collider.gameObject);
+                        ret = true;
+                    }
+                }
             }
         }
+
+        //bool ret = false;
+        //RaycastHit hit;
+
+        //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        //{
+        //    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+
+        //    var selection = hit.transform;
+
+        //    if(selection.tag=="Duck")
+        //    {
+        //        Fish(selection.gameObject);
+        //        ret = true;
+        //    }
+        //}
         return ret;
     }
 

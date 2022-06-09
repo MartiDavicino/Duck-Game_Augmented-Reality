@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Duck
   - Net
+  - Ground
+  - DeathBait
   layers:
   - Default
   - TransparentFX

@@ -5,11 +5,13 @@ using UnityEngine.AI;
 
 public class NavigationBaker : MonoBehaviour
 {
-    public NavMeshSurface surface;
+    private NavMeshSurface surface;
 
     // Start is called before the first frame update
     public void Start()
     {
+        GameObject spawner = GameObject.Find("Spawner");
+        surface = spawner.GetComponent<NavMeshSurface>();
         surface.BuildNavMesh();
     }
 

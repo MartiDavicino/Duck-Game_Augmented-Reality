@@ -120,8 +120,6 @@ public class DuckBehaviour : MonoBehaviour
             spawner.GetComponent<DuckSpawner>().currentDucks--;
             Destroy(gameObject);
         }
-
-        caught = false;
     }
 
     private void OnDestroy()
