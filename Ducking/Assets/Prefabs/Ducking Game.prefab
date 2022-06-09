@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: 10
-  baitPrefab: {fileID: 2723012902435119820, guid: b48df6ae4e9770847a99338599aff669, type: 3}
+  baitPrefab: {fileID: 5369982570560825325, guid: 193421ddeacea7240a462eae3068b26a, type: 3}
   maxForceMultiplier: 2
   currentForceMultiplier: 0
   pressing: 0
