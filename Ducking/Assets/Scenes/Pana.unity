@@ -455,9 +455,5 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3295762993902417855, guid: a091e5f8cac635740bf73c5d89d41ba9, type: 3}
-      propertyPath: unlockedHats.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a091e5f8cac635740bf73c5d89d41ba9, type: 3}

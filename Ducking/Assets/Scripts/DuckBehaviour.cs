@@ -45,6 +45,8 @@ public class DuckBehaviour : MonoBehaviour
 
     private bool aTomarPorCulo;
 
+
+
     void Start()
     {
         spawner = GameObject.Find("Spawner");
@@ -73,6 +75,24 @@ public class DuckBehaviour : MonoBehaviour
             }
         }
 
+        if (Random.Range(0f, 1f) >= 0.45f)
+        {
+            generalManager = GameObject.Find("fish_rod").GetComponent<GeneralManager>();
+            if (generalManager.unlockedHats.Count > 0)
+            {
+                hats = generalManager.unlockedHats;
+
+                hatIndex = Random.Range(0, hats.Count);
+                Vector3 startPosition = new Vector3(transform.position.x, transform.position.y + (0.9f * transform.localScale.y), transform.position.z + (0.15f * transform.localScale.z));
+                hat = Instantiate(hats[hatIndex], startPosition, Quaternion.identity);
+                hat.transform.parent = gameObject.transform;
+                hat.transform.Rotate(-90, 0, 0);
+            }
+        } else
+        {
+            hat = null;
+        }
+
         if (agent != null)
         {
 
@@ -97,20 +117,14 @@ public class DuckBehaviour : MonoBehaviour
 
         aTomarPorCulo = false;
 
+        if(!agent.isOnNavMesh)
+        {
+            generalManager.currentScore += Random.Range(50, 100);
+            Instantiate(confettiParticle, transform.position, transform.rotation);
+            spawner.GetComponent<DuckSpawner>().currentDucks--;
+        }
 
         invincible = false;
-
-        generalManager = GameObject.Find("fish_rod").GetComponent<GeneralManager>();
-        if(generalManager.unlockedHats.Count > 0)
-        {
-            hats = generalManager.unlockedHats;
-
-            hatIndex = Random.Range(0, hats.Count);
-            Vector3 startPosition = new Vector3(transform.position.x, transform.position.y + (0.9f * transform.localScale.y), transform.position.z + (0.15f * transform.localScale.z));
-            hat = Instantiate(hats[hatIndex], startPosition, Quaternion.identity);
-            hat.transform.parent = gameObject.transform;
-            hat.transform.Rotate(-90, 0, 0);
-        }
     }
 
     // Update is called once per frame
@@ -173,8 +187,7 @@ public class DuckBehaviour : MonoBehaviour
     {
         if(other.tag == "Net" && caught)
         {
-            generalManager.currentScore += 100;
-            //generalManager.currentScore += 30 / (int)transform.localScale.magnitude;
+            generalManager.currentScore += Random.Range(50, 100);
             Instantiate(confettiParticle, transform.position, transform.rotation);
             spawner.GetComponent<DuckSpawner>().currentDucks--;
             aTomarPorCulo = true;

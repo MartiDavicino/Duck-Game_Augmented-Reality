@@ -40,7 +40,7 @@ public class ThrowCycle : MonoBehaviour
             if(rodScript.pressing)
             {
                 rodScript.RotateHandle();
-                rb.AddForce(dir * rodScript.currentForceMultiplier * 20f);
+                rb.AddForce(dir * rodScript.currentForceMultiplier * 35f);
             }
         }
     }
