@@ -52,10 +52,11 @@ public class RodBehaviour : MonoBehaviour
             if (first.phase == TouchPhase.Stationary)
             {
                 pressing = true;
-
+                RotateHandle();
+                
                 if (currentForceMultiplier < maxForceMultiplier)
                 {
-                    currentForceMultiplier = currentForceMultiplier + Time.deltaTime;
+                    currentForceMultiplier += Time.deltaTime * 2;
                 }
                 else
                 {

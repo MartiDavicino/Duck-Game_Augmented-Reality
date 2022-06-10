@@ -31,12 +31,9 @@ public class DuckBehaviour : MonoBehaviour
     ParticleSystem confettiParticleInstance;
     ParticleSystem explosionParticleInstance;
 
-    [HideInInspector] public bool caught;
+    [HideInInspector] public bool caught = false;
 
-    [HideInInspector] public bool invincible;
-
-    [HideInInspector] public float caughtTime = 0.5f;
-    [HideInInspector] public float caughtTimeIncrease;
+    [HideInInspector] public bool invincible = false;
 
     private List<GameObject> hats;
     private GeneralManager generalManager;
@@ -52,8 +49,6 @@ public class DuckBehaviour : MonoBehaviour
         spawner = GameObject.Find("Spawner");
         if (spawner == null)
             Debug.LogWarning("Could find spawner");
-
-        caughtTimeIncrease = 0f;
 
         agent = GetComponent<NavMeshAgent>();
 
@@ -75,18 +70,22 @@ public class DuckBehaviour : MonoBehaviour
             }
         }
 
+        generalManager = GameObject.Find("fish_rod").GetComponent<GeneralManager>();
         if (Random.Range(0f, 1f) >= 0.45f)
         {
-            generalManager = GameObject.Find("fish_rod").GetComponent<GeneralManager>();
             if (generalManager.unlockedHats.Count > 0)
             {
                 hats = generalManager.unlockedHats;
 
-                hatIndex = Random.Range(0, hats.Count);
+                if (hats.Count > 0)
+                    hatIndex = Random.Range(0, hats.Count);
                 Vector3 startPosition = new Vector3(transform.position.x, transform.position.y + (0.9f * transform.localScale.y), transform.position.z + (0.15f * transform.localScale.z));
-                hat = Instantiate(hats[hatIndex], startPosition, Quaternion.identity);
-                hat.transform.parent = gameObject.transform;
-                hat.transform.Rotate(-90, 0, 0);
+                if (hats.Count > 0)
+                {
+                    hat = Instantiate(hats[hatIndex], startPosition, Quaternion.identity);
+                    hat.transform.parent = gameObject.transform;
+                    hat.transform.Rotate(-90, 0, 0);
+                }
             }
         } else
         {
@@ -142,10 +141,6 @@ public class DuckBehaviour : MonoBehaviour
             duckMaterial.SetFloat(rednessReference, materialRedness);
         }
 
-        if(!caught && caughtTimeIncrease > 0)
-            caughtTimeIncrease -= Time.deltaTime;
-
-
         lifetime -= Time.deltaTime;
 
         if (lifetime <= 0)
@@ -183,15 +178,23 @@ public class DuckBehaviour : MonoBehaviour
         return finalPos;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if(other.tag == "Net" && caught)
         {
+            aTomarPorCulo = true;
             generalManager.currentScore += Random.Range(50, 100);
             Instantiate(confettiParticle, transform.position, transform.rotation);
             spawner.GetComponent<DuckSpawner>().currentDucks--;
+            return;
+        }
+
+        if(other.tag == "DeathBait")
+        {
             aTomarPorCulo = true;
-        } else if (other.tag == "Net")
+        }
+
+        if(other.tag == "Net")
         {
             invincible = true;
             duckMaterial.SetFloat(rednessReference, -10);
