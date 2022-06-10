@@ -192,6 +192,8 @@ public class DuckBehaviour : MonoBehaviour
         if(other.tag == "DeathBait")
         {
             aTomarPorCulo = true;
+            Instantiate(confettiParticle, transform.position, transform.rotation);
+            spawner.GetComponent<DuckSpawner>().currentDucks--;
         }
 
         if(other.tag == "Net")
